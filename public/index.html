@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ClientPulse — Real-Time Project Dashboard</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- ===================== LOGIN SCREEN ===================== -->
+<div id="login-screen" class="screen">
+  <div class="login-card">
+    <div class="brand">
+      <div class="brand-mark">CP</div>
+      <h1>ClientPulse</h1>
+    </div>
+    <p class="subtitle">Real-Time Client Project Dashboard</p>
+
+    <form id="login-form">
+      <label>Email</label>
+      <input type="email" id="login-email" placeholder="you@demo.com" required />
+      <label>Password</label>
+      <input type="password" id="login-password" placeholder="••••••••" required />
+      <button type="submit">Sign in</button>
+      <p id="login-error" class="error-text"></p>
+    </form>
+
+    <div class="demo-accounts">
+      <p>Demo accounts (role-based access):</p>
+      <button class="demo-btn" data-email="admin@demo.com" data-pass="admin123">Admin — admin@demo.com</button>
+      <button class="demo-btn" data-email="manager@demo.com" data-pass="manager123">Manager — manager@demo.com</button>
+      <button class="demo-btn" data-email="client@demo.com" data-pass="client123">Client — client@demo.com</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== DASHBOARD ===================== -->
+<div id="app-screen" class="screen hidden">
+  <header class="topbar">
+    <div class="brand small">
+      <div class="brand-mark">CP</div>
+      <span>ClientPulse</span>
+    </div>
+    <div class="topbar-right">
+      <span id="live-dot" class="live-dot" title="Live connection status"></span>
+      <span id="live-status">Connecting…</span>
+      <span class="user-chip">
+        <span id="user-name"></span>
+        <span id="user-role" class="role-badge"></span>
+      </span>
+      <button id="logout-btn" class="ghost-btn">Log out</button>
+    </div>
+  </header>
+
+  <div class="layout">
+    <!-- Projects / main panel -->
+    <main class="main-panel">
+      <div id="project-list-view">
+        <div class="panel-header">
+          <h2>Projects</h2>
+          <button id="new-project-btn" class="primary-btn hidden">+ New Project</button>
+        </div>
+        <div id="projects-grid" class="projects-grid"></div>
+      </div>
+
+      <div id="project-detail-view" class="hidden">
+        <div class="panel-header">
+          <button id="back-btn" class="ghost-btn">← Back to projects</button>
+        </div>
+        <h2 id="detail-project-name"></h2>
+        <p id="detail-project-desc" class="muted"></p>
+
+        <div class="board-header">
+          <h3>Task Board</h3>
+          <button id="new-task-btn" class="primary-btn hidden">+ New Task</button>
+        </div>
+        <div class="board" id="board">
+          <div class="board-col" data-status="todo"><h4>To Do</h4><div class="board-col-list" id="col-todo"></div></div>
+          <div class="board-col" data-status="in_progress"><h4>In Progress</h4><div class="board-col-list" id="col-in_progress"></div></div>
+          <div class="board-col" data-status="review"><h4>Review</h4><div class="board-col-list" id="col-review"></div></div>
+          <div class="board-col" data-status="done"><h4>Done</h4><div class="board-col-list" id="col-done"></div></div>
+        </div>
+
+        <div class="comment-box">
+          <h3>Add a comment / update</h3>
+          <form id="comment-form">
+            <input type="text" id="comment-input" placeholder="Share an update with the team…" />
+            <button type="submit" class="primary-btn">Post</button>
+          </form>
+        </div>
+      </div>
+    </main>
+
+    <!-- Live activity feed -->
+    <aside class="activity-panel">
+      <div class="panel-header">
+        <h3>Live Activity Feed</h3>
+        <span id="feed-badge" class="feed-badge hidden">new</span>
+      </div>
+      <div id="activity-feed" class="activity-feed"></div>
+    </aside>
+  </div>
+</div>
+
+<!-- ===================== MODALS ===================== -->
+<div id="modal-overlay" class="modal-overlay hidden">
+  <div class="modal">
+    <h3 id="modal-title">New</h3>
+    <div id="modal-body"></div>
+    <div class="modal-actions">
+      <button id="modal-cancel" class="ghost-btn">Cancel</button>
+      <button id="modal-confirm" class="primary-btn">Save</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast-container"></div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
