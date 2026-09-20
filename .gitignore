@@ -1,0 +1,5 @@
+﻿node_modules/
+server/dashboard.db
+server/dashboard.db-shm
+server/dashboard.db-wal
+.env
